@@ -1,0 +1,35 @@
+$terraform validate
+$terraform get
+ this will give the module name
+$terraform plan
+then apply
+
+operator
+
+if you have different ..tfvars file like dev.tfvars,test.tfvars, prod.tfvars. then you can execute perticular .tfvars file according to your project
+
+terraform apply -vars-file <tfvars-filename>
+
+terraform apply -vars-file dev.tfvars
+or
+terraform apply -var="my_instance_type=t2.micro"  ----this is to apply a perticular variable
+
+
+declaring a variable in local in main.tf file
+===========================
+locals {
+	setup_name = "xyz"
+	file_name  = "abc"
+	any_name   = "mno"
+}
+//here we will call the variable
+resource "aws_vpc" "vpc_name"{
+	cidr_block = "10.0.0.0/24"
+	tags = {
+		Name = "${local.setup_name}-vpc" //output wiil be xyz-vpc
+		type = "${local.file_name}-vpcname"//output will be  abc-vpcname
+		rama = local.nay_name //output wiil be "mno" only
+		
+	}
+}
+
